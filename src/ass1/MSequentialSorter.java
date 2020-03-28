@@ -1,8 +1,7 @@
 package ass1;
 
-import java.lang.reflect.Array;
+import javax.print.attribute.standard.PDLOverrideSupported;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -10,6 +9,10 @@ public class MSequentialSorter implements Sorter {
 
     @Override
     public <T extends Comparable<? super T>> List<T> sort(List<T> list) {
+        return doSort(list); // Calling static version because interface requires non static version
+    }
+
+    public static <T extends Comparable<? super T>> List<T> doSort(List<T> list) {
         if(list == null || list.size() == 0)
             return Collections.emptyList();
 
@@ -20,8 +23,8 @@ public class MSequentialSorter implements Sorter {
         List<T> firstHalf = list.subList(0, midIndex);
         List<T> secondHalf = list.subList(midIndex, list.size());
 
-        List<T> sortedFirstHalf = sort(firstHalf);
-        List<T> sortedSecondHalf = sort(secondHalf);
+        List<T> sortedFirstHalf = doSort(firstHalf);
+        List<T> sortedSecondHalf = doSort(secondHalf);
 
         return merge(sortedFirstHalf, sortedSecondHalf);
     }
@@ -33,7 +36,7 @@ public class MSequentialSorter implements Sorter {
      * @param <T> A comparable type.
      * @return A sorted list.
      */
-    private <T extends Comparable<? super T>> List<T> merge(List<T> list1, List<T> list2) {
+    public static <T extends Comparable<? super T>> List<T> merge(List<T> list1, List<T> list2) {
         List<T> result = new ArrayList<>();
 
         int index1 = 0, index2 = 0;
@@ -59,9 +62,6 @@ public class MSequentialSorter implements Sorter {
             if (item1.compareTo(item2) > 0) {
                 result.add(item2);
                 ++index2;
-            } else if (item1.compareTo(item2) < 0) {
-                result.add(item1);
-                ++index1;
             } else {
                 result.add(item1);
                 ++index1;
