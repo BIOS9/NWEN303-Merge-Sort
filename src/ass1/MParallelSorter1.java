@@ -30,7 +30,7 @@ public class MParallelSorter1 implements Sorter {
         return MSequentialSorter.merge(get(sortedFirstHalf), sortedSecondHalf);
     }
 
-    // Took this method from NWEN303 lecture 4 slides
+    // Took this method from NWEN303 lecture 4 slides 2020
     public static <T> T get(Future<T> f) {
         try {
             return f.get();
