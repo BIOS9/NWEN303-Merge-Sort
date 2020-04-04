@@ -41,7 +41,12 @@ public class TestPerformance {
     System.out.println("On the data type Point");
     msgAll(TestPoint.dataset);
     }
+  @Test
+  void testString() {
+    System.out.println("On the data type Point");
+    msgAll(TestPoint.dataset);
   }
+}
 /*
 With the model solutions, on a lab machine we may get those results:
 On the data type Float

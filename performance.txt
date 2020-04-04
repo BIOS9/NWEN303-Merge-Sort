@@ -1,0 +1,22 @@
+Performance test:
+
+On the data type Float
+Sequential merge sort sort takes 2.347 seconds
+Parallel merge sort (futures) sort takes 1.401 seconds
+Parallel merge sort (completablefutures) sort takes 0.698 seconds
+Parallel merge sort (forkJoin) sort takes 0.73 seconds
+
+
+On the data type Point
+Sequential merge sort sort takes 2.462 seconds
+Parallel merge sort (futures) sort takes 1.503 seconds
+Parallel merge sort (completablefutures) sort takes 0.76 seconds
+Parallel merge sort (forkJoin) sort takes 0.755 seconds
+
+
+On the data type BigInteger
+Sequential merge sort sort takes 2.437 seconds
+Parallel merge sort (futures) sort takes 1.488 seconds
+Parallel merge sort (completablefutures) sort takes 0.868 seconds
+Parallel merge sort (forkJoin) sort takes 0.823 seconds
+

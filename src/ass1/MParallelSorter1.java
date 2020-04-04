@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class MParallelSorter1 implements Sorter {
-    private static final ExecutorService pool = Executors.newCachedThreadPool(); // Was getting thread exhaustion with fixed thread pool.
+    private static final ExecutorService pool = Executors.newWorkStealingPool(); // Was getting thread exhaustion with fixed thread pool.
 
     @Override
     public <T extends Comparable<? super T>> List<T> sort(List<T> list) {
