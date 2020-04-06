@@ -22,6 +22,15 @@ public class MParallelSorter3<T extends Comparable<? super T>> extends Recursive
         return pool.invoke(new MParallelSorter3<>(list));
     }
 
+    /**
+     * Implementation of merge sort using ForkJoin library and RecursiveTask.
+     * The ForkJoin library provides a very easy way to do recursive tasks.
+     * Each recursive task goes into the pool, and then a pool of threads executes tasks.
+     * This has the advantage that threads are not used just for waiting, they are executing work
+     * tasks most of the time.
+     *
+     * I learned that the library uses tasks and doesnt use a whole thread for each RecursiveTask.
+     */
     @Override
     protected List<T> compute() {
         if (list == null)

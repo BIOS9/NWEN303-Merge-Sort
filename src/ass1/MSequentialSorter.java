@@ -12,6 +12,16 @@ public class MSequentialSorter implements Sorter {
         return doSort(list); // Calling static version because interface requires non static version
     }
 
+    /**
+     * This implementation of merge sort is very simple, uses only one thread as it is completely serial.
+     * This will be slower than the parallel versions for large data sets, but can be much faster for small data
+     * sets due to the overhead involved in parallelization and threading. It is much easier to program/debug something
+     * serial initially and not have to worry about threads or order of completion than it is to start off programming
+     * something parallel and have to deal with bugs that are hard to debug.
+     *
+     * While programming this, I learned how much faster this could be than a parallel version of the same thing for
+     * smaller data sets.
+     */
     public static <T extends Comparable<? super T>> List<T> doSort(List<T> list) {
         if(list == null || list.size() == 0)
             return Collections.emptyList();

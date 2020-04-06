@@ -11,6 +11,16 @@ import java.util.concurrent.Future;
 public class MParallelSorter1 implements Sorter {
     private static final ExecutorService pool = Executors.newWorkStealingPool(); // Was getting thread exhaustion with fixed thread pool.
 
+    /**
+     * Sorts a list of items using merge parallel merge sort implemented using futures.
+     *
+     * Futures allow greater control over the fork/join process than using a parallel stream does.
+     * A major problem with futures in a nested/recursive arrangement is that lots of futures end up doing nothing
+     * except waiting for other futures to complete. This can cause thread exhaustion with a fixed thread pool.
+     *
+     * I had never encountered thread exhaustion before, so this was a good learning experience to debug the program when
+     * it occurred.
+     */
     @Override
     public <T extends Comparable<? super T>> List<T> sort(List<T> list) {
         if (list == null)
@@ -24,13 +34,18 @@ public class MParallelSorter1 implements Sorter {
         final List<T> firstHalf = list.subList(0, midIndex);
         final List<T> secondHalf = list.subList(midIndex, list.size());
 
-        Future<List<T>> sortedFirstHalf = pool.submit(() -> sort(firstHalf));
-        List<T> sortedSecondHalf = sort(secondHalf);
+        Future<List<T>> sortedFirstHalf = pool.submit(() -> sort(firstHalf)); // Fork first half
+        List<T> sortedSecondHalf = sort(secondHalf); // Continue second half on current thread
 
-        return MSequentialSorter.merge(get(sortedFirstHalf), sortedSecondHalf);
+        return MSequentialSorter.merge(get(sortedFirstHalf), sortedSecondHalf); // Wait and join here
     }
 
-    // Took this method from NWEN303 lecture 4 slides 2020
+    /**
+     * Provides error handling for Futures by converting checked exceptions to
+     * unchecked exceptions.
+     *
+     * This method was taken from the NWEN303 2020 lecture 4 slides.
+     */
     public static <T> T get(Future<T> f) {
         try {
             return f.get();
