@@ -1,0 +1,7 @@
+The problem with this method of testing is that it relies heavily on physical hardware but does not take it into account.
+It also does not take into account the number of threads waiting doing nothing.
+The tests could take a different amount of time for a machine with more or less cores, or faster ram or CPU, but the testing is not aware of these things.
+Another issue is that the time may vary depending on how the system optimizes or orders the priority of processes. For example if the computer was being used to do something else, the test might get a lower priority.
+
+A better method of testing would be something higher level, like looking at the complexity of the algorithm, and looking at how many threads are running/waiting at any given point.
+The underlying sequential algorithm could be analysed using conventional high level methods like Big O notation for example, then the parallelisation could be taken into account after that.
